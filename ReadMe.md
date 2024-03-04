@@ -12,7 +12,7 @@ In it's current stage, BytePress can read RSS Feeds, retrieve articles, and pack
 # Technical
 This project is written in Python as it's a user-friendly language and is easy to learn, allowing it to be customised without needing to learn a complex language. Another benefit of using Python are the libraries created for it.
 
-Libraries used for this project are:
+Libraries used for this project are:\n
 Newspaper - Codelucas (+82 contributors) - Article Extraction
 ebooklib -  Aleksandar Erkalovic - Ebook Creation
 Feedparser - Kurt McKee - RSS Reading
