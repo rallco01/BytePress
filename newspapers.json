@@ -1,0 +1,24 @@
+[
+    {
+    	"Cover Path" : "Cover.png",
+		"Title" : "Gaming News",
+        "Author" : "Author",
+    	"Sources" : [
+    		{
+    			"Publisher Name" : "Polygon",
+    			"Filter" : [
+    				{
+    					"Author" : "Austen Goslin"
+    				}
+    			],
+    			"Frequency" : "137",
+    			"Last Update": "2024-01-05",
+    			"Source" : "https://www.polygon.com/rss/index.xml"
+    		}
+    	],
+		"Formats" : [
+			"PDF",
+			"Ebook"
+		]
+    }
+]
