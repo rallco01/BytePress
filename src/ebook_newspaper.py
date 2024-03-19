@@ -1,6 +1,7 @@
 from ebooklib import epub
+import json
 from datetime import datetime
-from src import article_to_html
+from src import Link, article_to_html
 
 # Returns a chapter object
 def link_to_chapter(link):
@@ -28,10 +29,8 @@ def links_to_chapters(links):
     return chapters
 
 # Creates the ebook file
-def create_ebook(newspaper, links):
+def create_ebook(newspaper, title, links):
     # Get data from newspaper object for epub
-    date = datetime.today().strftime('%d-%m-%Y')
-    title = f'{newspaper["Title"]} {date}'
     author = newspaper["Author"]
     cover_path = newspaper["Cover Path"]
 
@@ -63,4 +62,4 @@ def create_ebook(newspaper, links):
         book.toc.append(chapter)
         book.spine.append(chapter)
     
-    epub.write_epub(f'{title}.epub', book, {})
+    epub.write_epub(f'.\\temp\\{title}.epub', book, {})

@@ -14,11 +14,44 @@
     			"Frequency" : "137",
     			"Last Update": "2024-01-05",
     			"Source" : "https://www.polygon.com/rss/index.xml"
+    		},
+    		{
+    			"Publisher Name" : "Verge",
+    			"Filter" : "N/A",
+    			"Frequency" : "Everyday",
+    			"Last Update": "2024-01-06",
+    			"Source" : "https://www.polygon.com/rss/index.xml"
     		}
     	],
-		"Formats" : [
-			"PDF",
-			"Ebook"
+		"Destinations" : [
+			{"Format": "EBook", "Send To": "Folder", "Destination": ".\\Destination"},
+			{"Format": "Kindle EBook", "Send To": "Folder", "Destination": "R:\\Temp"},
+			{"Format": "PDF", "Send To": "Folder", "Destination": ".\\Destination"}
+		]
+    },
+    {
+        "Cover Path" : "Cover.png",
+		"Title" : "Design News",
+        "Author" : "Author",
+    	"Sources" : [
+    		{
+    			"Publisher Name" : "CSS Tricks",
+    			"Filter" : "N/A",
+    			"Frequency" : "137",
+    			"Last Update": "2024-01-05",
+    			"Source" : "https://css-tricks.com/feed/"
+    		},
+    		{
+    			"Publisher Name" : "UX Planet",
+    			"Filter" : "N/A",
+    			"Frequency" : "Everyday",
+    			"Last Update": "2024-01-06",
+    			"Source" : "https://uxplanet.org/feed"
+    		}
+    	],
+		"Destinations" : [
+			{"Format": "EBook", "Send To": "Folder", "Destination": ".\\Destination"},
+			{"Format": "HTML", "Send To": "Folder", "Destination": ".\\Destination"}
 		]
     }
 ]

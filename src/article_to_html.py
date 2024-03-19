@@ -29,7 +29,7 @@ def create_html_data(html_content, article):
         return authors[:-2]
     
     html=""
-    html=f'{html}<html>\n<head></head>\n<body>\n<section class="page">\n'
+    html=f'{html}<html>\n<head></head>\n<body>\n<section class="chapter">\n'
     html=f'{html}<h1>{article.title}</h1>\n'
     html=f'{html}<h2>{get_authors_str()}</h2>\n'
     html=f'{html}{html_content}'
