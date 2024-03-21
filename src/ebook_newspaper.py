@@ -1,15 +1,16 @@
 from ebooklib import epub
 import json
 from datetime import datetime
-from src import Link, article_to_html
+from . import Source
+from src import article_to_html
 
 # Returns a chapter object
-def link_to_chapter(link):
-    article = article_to_html.get_article(link.link)
+def source_to_chapter(source):
+    article = article_to_html.get_article(source.link)
     html_content = article_to_html.content_to_html(article)
     html_chapter = article_to_html.create_html_chapter(html_content)
 
-    title = f'{link.publisher} : {article.title}'
+    title = f'{source.publisher} : {article.title}'
 
     chapter = epub.EpubHtml(
         title=title,
@@ -21,15 +22,15 @@ def link_to_chapter(link):
     return chapter
 
 # Returns a list of chapter objects
-def links_to_chapters(links):
+def sources_to_chapters(sources):
     chapters = []
-    for link in links:
-        chapters.append(link_to_chapter(link))
+    for source in sources:
+        chapters.append(source_to_chapter(source))
 
     return chapters
 
 # Creates the ebook file
-def create_ebook_newspaper(newspaper, title, links):
+def create_ebook_newspaper(newspaper, title, sources):
     # Get data from newspaper object for epub
     author = newspaper["Author"]
     cover_path = newspaper["Cover Path"]
@@ -55,7 +56,7 @@ def create_ebook_newspaper(newspaper, title, links):
     book.spine.append('nav')
 
     # Add chapters to the epub
-    chapters = links_to_chapters(links)
+    chapters = sources_to_chapters(sources)
     for chapter in chapters:
         print(chapter.title)
         book.add_item(chapter)

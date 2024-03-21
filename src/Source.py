@@ -1,4 +1,4 @@
-class Link:
+class Source:
     def __init__(
         self,
         publisher,

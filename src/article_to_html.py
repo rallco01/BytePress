@@ -1,8 +1,8 @@
 from newspaper import Article
 
 # Returns an article object
-def get_article(link):  
-    article = Article(link)
+def get_article(source):  
+    article = Article(source)
     article.download()
     article.parse()
 
@@ -41,11 +41,11 @@ def create_html_file(filename, html):
         file.write(html.encode())
 
 # Creates full HTML newspaper
-def create_html_newspaper(title, links):
+def create_html_newspaper(title, sources):
     # Create html string
     html="<html>\n<head></head>\n<body>\n"
-    for link in links:
-        article = get_article(link.link)
+    for source in sources:
+        article = get_article(source.link)
         html = f'{html}{content_to_html(article)}'
     html = f'{html}</body>\n</html>'
 

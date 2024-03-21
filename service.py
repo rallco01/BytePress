@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import os
 import shutil
-from src import Link, ebook_newspaper, article_to_html
+from src import ebook_newspaper, article_to_html, Source
 
 # Load data from JSON files
 with open("config.json", "r") as jsonfile:
@@ -18,7 +18,7 @@ date = datetime.today().strftime('%d-%m-%Y')
 # Create a list to store the file names of all created files
 filenames = []
 
-# get links to each article from RSS feed
+# get source  to each article from RSS feed
 def rss_links(source):
     article_feed = feedparser.parse(source["Source"])
 
@@ -26,13 +26,27 @@ def rss_links(source):
     if(num_articles > config['max_articles']) :
         num_articles = config['max_articles']
 
-    article_links = []
+    article_sources = []
 
     for i in range(num_articles):
-        link = Link.Link(source["Publisher Name"], article_feed.entries[i].link)
-        article_links.append(link)
+        article_source = Source.Source(source["Publisher Name"], article_feed.entries[i].link)
+        article_sources.append(article_source)
     
-    return article_links
+    return article_sources
+
+# Get a list of all sources 
+def get_list_links(newspaper):
+    sources = []
+    for source in newspaper["Sources"]:
+        sources.extend(rss_links(source))
+
+    return sources
+
+# Move files to appropriate location
+def send_file(filename, send_to, destination):
+    match send_to:
+        case "Folder":
+            shutil.copy(f".\\temp\\{filename}", f"{destination}\\{filename}")
 
 def create_epub_newspaper(newspaper, send_to, destination):
     # Create expected title and filename
@@ -42,18 +56,14 @@ def create_epub_newspaper(newspaper, send_to, destination):
     # Check if file exists
     if not os.path.isfile(f".\\temp\\{filename}"):
         # Create the complete list of links
-        links = []
-        for source in newspaper["Sources"]:
-            links.extend(rss_links(source))
+        sources = get_list_links(newspaper)
         # Create ebook from all links
-        ebook_newspaper.create_ebook_newspaper(newspaper, title, links)
+        ebook_newspaper.create_ebook_newspaper(newspaper, title, sources)
 
         filenames.append(f".\\temp\\{filename}")
     
     # Send epub to appropriate destination
-    match send_to:
-        case "Folder":
-            shutil.copy(f".\\temp\\{filename}", f"{destination}\\{filename}")
+    send_file(filename, send_to, destination)
 
 def create_html_newspaper(newspaper, send_to, destination):
     # Create expected title and filename
@@ -63,19 +73,15 @@ def create_html_newspaper(newspaper, send_to, destination):
     # Check if file exists
     if not os.path.isfile(f".\\temp\\{filename}"):
         # Create the complete list of links
-        links = []
-        for source in newspaper["Sources"]:
-            links.extend(rss_links(source))
+        sources = get_list_links(newspaper)
         
         # Create HTML from all links
-        article_to_html.create_html_newspaper(title, links)
+        article_to_html.create_html_newspaper(title, sources)
 
         filenames.append(f".\\temp\\{filename}")
 
-    # Send html file to appropriate location 
-    match send_to:
-        case "Folder":
-            shutil.copy(f".\\temp\\{filename}", f"{destination}\\{filename}")
+    # Send html file to appropriate location
+    send_file(filename, send_to, destination)
 
 def create_newspapers():
     for newspaper in newspapers:
@@ -93,9 +99,3 @@ def empty_temp_folder():
         os.remove(filename)
 
 empty_temp_folder()
-
-# TODO
-# Refactor
-#   - Create complete list of links in each newspaper creation function should be made into it's own function
-#   - Send file to appropriate location should be it's own function
-#   - Change 'Link' object to 'Source' object to avoid confusion in code
