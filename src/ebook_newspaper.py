@@ -7,7 +7,7 @@ from src import Link, article_to_html
 def link_to_chapter(link):
     article = article_to_html.get_article(link.link)
     html_content = article_to_html.content_to_html(article)
-    html_chapter = article_to_html.create_html_data(html_content, article)
+    html_chapter = article_to_html.create_html_chapter(html_content)
 
     title = f'{link.publisher} : {article.title}'
 
@@ -29,7 +29,7 @@ def links_to_chapters(links):
     return chapters
 
 # Creates the ebook file
-def create_ebook(newspaper, title, links):
+def create_ebook_newspaper(newspaper, title, links):
     # Get data from newspaper object for epub
     author = newspaper["Author"]
     cover_path = newspaper["Cover Path"]
